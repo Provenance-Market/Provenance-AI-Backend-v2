@@ -7,13 +7,15 @@ contract ProvNFTFactory {
     ProvNFT[] public deployedContracts;
     mapping(address => ProvNFT[]) private ownerCollections;
 
+    event ProvNFTCreated(address owner, address deployedContract);
+
     function createBasicNft(
         string memory name,
         string memory symbol,
         address[] memory payees,
         uint256[] memory shares,
         uint256 mintFee
-    ) public returns (ProvNFT) {
+    ) public returns (address) {
         address collectionOwner = msg.sender;
         ProvNFT newBasicNft = new ProvNFT(
             name,
