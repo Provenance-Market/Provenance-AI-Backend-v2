@@ -32,8 +32,8 @@ contract DeployAndConfigureExampleToken is Script {
         // This example uses ERC721SeaDrop. For separate Owner and
         // Administrator privileges, use ERC721PartnerSeaDrop.
         ERC721SeaDrop token = new ERC721SeaDrop(
-            "Prov SeaDrop Token 1",
-            "PSDT1",
+            "SeaDrop Ex Token",
+            "SDET",
             allowedSeadrop
         );
 

@@ -12,9 +12,9 @@ import { PublicDrop } from "../src/lib/SeaDropStructs.sol";
 
 contract DeployProvNFTCollection is Script {
     // Addresses
-    address seadrop = 0x00005EA00Ac477B1030CE78506496e8C2dE24bf5;
-    address creator = 0x41196385fB1ec44F30c2E64D789dBa2ba004Bb24;
-    address feeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
+    address seadrop = 0x5FbDB2315678afecb367f032d93F642f64180aa3; // SeaDrop deployed on Anvil
+    address creator = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // 1st anvil account
+    address feeRecipient = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; // 2nd account
 
     // Token config
     uint256 maxSupply = 100;
