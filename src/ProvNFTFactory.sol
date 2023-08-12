@@ -1,32 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import { ProvNFT } from "./ProvNFT.sol";
+import { ProvNFTCollection } from "./ProvNFTCollection.sol";
 
 contract ProvNFTFactory {
-    ProvNFT[] public deployedContracts;
-    mapping(address => ProvNFT[]) private ownerCollections;
+    ProvNFTCollection[] public deployedContracts;
+    mapping(address => ProvNFTCollection[]) private ownerCollections;
 
     event ProvNFTCreated(address owner, address deployedContract);
 
-    function createBasicNft(
-        string memory name,
-        string memory symbol,
-        address[] memory payees,
-        uint256[] memory shares,
-        uint256 mintFee
-    ) public returns (address) {
+    function createBasicNft(string memory _name, string memory _symbol)
+        public
+        returns (address)
+    {
         address collectionOwner = msg.sender;
-        ProvNFT newBasicNft = new ProvNFT(
-            name,
-            symbol,
-            payees,
-            shares,
-            mintFee,
-            collectionOwner
+        address[] memory ownersArray = new address[](1);
+        ownersArray[0] = collectionOwner;
+
+        ProvNFTCollection newBasicNft = new ProvNFTCollection(
+            _name,
+            _symbol,
+            ownersArray
         );
+
         ownerCollections[collectionOwner].push(newBasicNft);
         deployedContracts.push(newBasicNft);
+
         emit ProvNFTCreated(collectionOwner, address(newBasicNft));
         return address(newBasicNft);
     }
@@ -35,9 +34,9 @@ contract ProvNFTFactory {
     function getOwnerCollection(uint256 _collectionIndex)
         private
         view
-        returns (ProvNFT)
+        returns (ProvNFTCollection)
     {
-        ProvNFT ownerCollection = ownerCollections[msg.sender][
+        ProvNFTCollection ownerCollection = ownerCollections[msg.sender][
             _collectionIndex
         ];
         require(
@@ -51,12 +50,16 @@ contract ProvNFTFactory {
     function getOwnerCollections(address owner)
         public
         view
-        returns (ProvNFT[] memory)
+        returns (ProvNFTCollection[] memory)
     {
         return ownerCollections[owner];
     }
 
-    function getDeployedContracts() public view returns (ProvNFT[] memory) {
+    function getDeployedContracts()
+        public
+        view
+        returns (ProvNFTCollection[] memory)
+    {
         return deployedContracts;
     }
 }
