@@ -6,6 +6,7 @@ import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
 /// @custom:security-contact contact@prov.ai
 contract ProvNFTCollection is ERC721SeaDrop {
     address[] private s_collectionOwner;
+    mapping(address => address[]) private s_collectionNFTs;
 
     event PayFee(address indexed sender);
 
@@ -15,6 +16,11 @@ contract ProvNFTCollection is ERC721SeaDrop {
         address[] memory _allowedSeaDrop
     ) ERC721SeaDrop(_name, _symbol, _allowedSeaDrop) {
         s_collectionOwner = _allowedSeaDrop;
+    }
+
+    function mintSeaDrop(address _minter, uint256 _quantity) public override {
+        // TODO: add nft addy to s_collectionNFTs
+        super.mintSeaDrop(_minter, _quantity);
     }
 
     function imageGenerationPayment(uint256 _cost, address _owner)
