@@ -34,7 +34,6 @@ contract ProvNFT is
     string private s_symbol;
     uint256 private s_mintPrice;
     address[] private s_owners;
-    address private s_collectionOwner;
 
     // Mapping from owner to list of owned token IDs test
     mapping(address => uint256[]) private _ownedTokens;
@@ -59,7 +58,6 @@ contract ProvNFT is
         s_symbol = _symbol;
         s_owners = _payees;
         s_mintPrice = _mintFee;
-        s_collectionOwner = collectionOwner;
     }
 
     modifier onlyOwners() {
@@ -234,9 +232,5 @@ contract ProvNFT is
 
     function getOwners() public view returns (address[] memory) {
         return s_owners;
-    }
-
-    function getCollectionOwner() public view returns (address) {
-        return s_collectionOwner;
     }
 }
