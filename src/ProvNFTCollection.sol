@@ -6,7 +6,7 @@ import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
 /// @custom:security-contact contact@prov.ai
 contract ProvNFTCollection is ERC721SeaDrop {
     address[] private s_collectionOwner;
-    mapping(address => address[]) private s_collectionNFTs;
+    uint256[] private s_collectionNFTs;
 
     event PayFee(address indexed sender);
 
@@ -18,11 +18,6 @@ contract ProvNFTCollection is ERC721SeaDrop {
         s_collectionOwner = _allowedSeaDrop;
     }
 
-    function mintSeaDrop(address _minter, uint256 _quantity) public override {
-        // TODO: add nft addy to s_collectionNFTs
-        super.mintSeaDrop(_minter, _quantity);
-    }
-
     function imageGenerationPayment(uint256 _cost, address _owner)
         public
         payable
@@ -32,6 +27,22 @@ contract ProvNFTCollection is ERC721SeaDrop {
             "Insufficient payment amount for AI image generation"
         );
         emit PayFee(_owner);
+    }
+
+    // TODO: Test correct mint tokenIds are stored in s_collectionNFTs
+    function _afterTokenTransfers(
+        address from,
+        address to,
+        uint256 startTokenId,
+        uint256 quantity
+    ) internal virtual override {
+        super._afterTokenTransfers(from, to, startTokenId, quantity);
+
+        // Append minted token IDs to the s_collectionNFTs array
+        for (uint256 i = 0; i < quantity; i++) {
+            uint256 tokenId = startTokenId + i;
+            s_collectionNFTs.push(tokenId);
+        }
     }
 
     // Getter functions for private variables
