@@ -51,8 +51,7 @@ contract ProvNFT is
         string memory _symbol,
         address[] memory _payees,
         uint256[] memory _shares,
-        uint256 _mintFee,
-        address collectionOwner
+        uint256 _mintFee
     ) ERC1155("") PaymentSplitter(_payees, _shares) {
         s_name = _name;
         s_symbol = _symbol;

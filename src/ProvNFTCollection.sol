@@ -51,4 +51,8 @@ contract ProvNFTCollection is ERC721SeaDrop {
     function getCollectionOwner() public view returns (address[] memory) {
         return s_collectionOwner;
     }
+
+    function getCollectionNFTs() public view returns (uint256[] memory) {
+        return s_collectionNFTs;
+    }
 }

@@ -29,14 +29,12 @@ contract deployProvNFT is Script {
 
     function run() external returns (ProvNFT) {
         vm.startBroadcast();
-        address collectionOwner = msg.sender;
         ProvNFT provNFT = new ProvNFT(
             name,
             symbol,
             payees,
             splitSharesEvenly(),
-            mintFee,
-            collectionOwner
+            mintFee
         );
         vm.stopBroadcast();
         return provNFT;
