@@ -22,6 +22,8 @@ contract ProvNFTCollection is ERC721SeaDrop {
         public
         payable
     {
+        _onlyAllowedSeaDrop(msg.sender);
+
         require(
             msg.value >= _cost,
             "Insufficient payment amount for AI image generation"
