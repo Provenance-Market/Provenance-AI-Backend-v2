@@ -2,12 +2,22 @@
 pragma solidity ^0.8.17;
 
 import { ProvNFTCollection } from "./ProvNFTCollection.sol";
+import {
+    PaymentSplitter
+} from "openzeppelin-contracts/finance/PaymentSplitter.sol";
 
-contract ProvNFTFactory {
+contract ProvNFTFactory is PaymentSplitter {
     ProvNFTCollection[] public deployedContracts;
     mapping(address => ProvNFTCollection[]) private ownerCollections;
+    address[] private s_owners;
 
     event ProvNFTCreated(address owner, address deployedContract);
+
+    constructor(address[] memory _payees, uint256[] memory _shares)
+        PaymentSplitter(_payees, _shares)
+    {
+        s_owners = _payees;
+    }
 
     function createBasicNft(string memory _name, string memory _symbol)
         public

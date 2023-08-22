@@ -43,9 +43,26 @@ contract deployProvNFT is Script {
 
 // Rather deploy ProvNFT via the ProvNFTFactory
 contract DeployProvNFTFactory is Script {
+    address[] public payees = [
+        0x7bE0e2BA81E9805F834Ee5661693241b3DC3034E,
+        0x111882696d2eCD112FB55C6829C1dad04d44397b,
+        0xE33cb5b4B828C775122FB90F7Dcc7c750b4aee3f
+    ];
+
+    function splitSharesEvenly() public view returns (uint256[] memory) {
+        uint256[] memory sharesArray = new uint256[](payees.length);
+        for (uint256 i = 0; i < payees.length; i++) {
+            sharesArray[i] = 1;
+        }
+        return sharesArray;
+    }
+
     function run() external returns (ProvNFTFactory) {
         vm.startBroadcast();
-        ProvNFTFactory provNFTFactory = new ProvNFTFactory();
+        ProvNFTFactory provNFTFactory = new ProvNFTFactory(
+            payees,
+            splitSharesEvenly()
+        );
         vm.stopBroadcast();
         return provNFTFactory;
     }

@@ -175,16 +175,20 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
     /**
      * @notice Mint a public drop.
      *
-     * @param nftContract      The nft contract to mint.
-     * @param feeRecipient     The fee recipient.
-     * @param minterIfNotPayer The mint recipient if different than the payer.
-     * @param quantity         The number of tokens to mint.
+     * @param nftContract       The nft contract to mint.
+     * @param feeRecipient      The fee recipient.
+     * @param minterIfNotPayer  The mint recipient if different than the payer.
+     * @param quantity          The number of tokens to mint.
+     * @param provFeeBps        The fee basis point for provenance.
+     * @param provFeeRecipient  The factory contract address.
      */
     function mintPublic(
         address nftContract,
         address feeRecipient,
         address minterIfNotPayer,
-        uint256 quantity
+        uint256 quantity,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable override {
         // Get the public drop data.
         PublicDrop memory publicDrop = _publicDrops[nftContract];
@@ -234,19 +238,23 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
             mintPrice,
             _PUBLIC_DROP_STAGE_INDEX,
             publicDrop.feeBps,
-            feeRecipient
+            feeRecipient,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
     /**
      * @notice Mint from an allow list.
      *
-     * @param nftContract      The nft contract to mint.
-     * @param feeRecipient     The fee recipient.
-     * @param minterIfNotPayer The mint recipient if different than the payer.
-     * @param quantity         The number of tokens to mint.
-     * @param mintParams       The mint parameters.
-     * @param proof            The proof for the leaf of the allow list.
+     * @param nftContract       The nft contract to mint.
+     * @param feeRecipient      The fee recipient.
+     * @param minterIfNotPayer  The mint recipient if different than the payer.
+     * @param quantity          The number of tokens to mint.
+     * @param mintParams        The mint parameters.
+     * @param proof             The proof for the leaf of the allow list.
+     * @param provFeeBps        The fee basis point for provenance.
+     * @param provFeeRecipient  The factory contract address.
      */
     function mintAllowList(
         address nftContract,
@@ -254,7 +262,9 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
         address minterIfNotPayer,
         uint256 quantity,
         MintParams calldata mintParams,
-        bytes32[] calldata proof
+        bytes32[] calldata proof,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable override {
         // Check that the drop stage is active.
         _checkActive(mintParams.startTime, mintParams.endTime);
@@ -312,7 +322,9 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
             mintPrice,
             mintParams.dropStageIndex,
             mintParams.feeBps,
-            feeRecipient
+            feeRecipient,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -320,14 +332,15 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @notice Mint with a server-side signature.
      *         Note that a signature can only be used once.
      *
-     * @param nftContract      The nft contract to mint.
-     * @param feeRecipient     The fee recipient.
-     * @param minterIfNotPayer The mint recipient if different than the payer.
-     * @param quantity         The number of tokens to mint.
-     * @param mintParams       The mint parameters.
-     * @param salt             The salt for the signed mint.
-     * @param signature        The server-side signature, must be an allowed
-     *                         signer.
+     * @param nftContract       The nft contract to mint.
+     * @param feeRecipient      The fee recipient.
+     * @param minterIfNotPayer  The mint recipient if different than the payer.
+     * @param quantity          The number of tokens to mint.
+     * @param mintParams        The mint parameters.
+     * @param salt              The salt for the signed mint.
+     * @param signature         The server-side signature, must be an allowed signer.
+     * @param provFeeBps        The fee basis point for provenance.
+     * @param provFeeRecipient  The factory contract address.
      */
     function mintSigned(
         address nftContract,
@@ -336,7 +349,9 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
         uint256 quantity,
         MintParams calldata mintParams,
         uint256 salt,
-        bytes calldata signature
+        bytes calldata signature,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable override {
         // Check that the drop stage is active.
         _checkActive(mintParams.startTime, mintParams.endTime);
@@ -407,7 +422,9 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
             mintParams.mintPrice,
             mintParams.dropStageIndex,
             mintParams.feeBps,
-            feeRecipient
+            feeRecipient,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -490,16 +507,20 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      *         This will mark the token ids as redeemed and will revert if the
      *         same token id is attempted to be redeemed twice.
      *
-     * @param nftContract      The nft contract to mint.
-     * @param feeRecipient     The fee recipient.
-     * @param minterIfNotPayer The mint recipient if different than the payer.
-     * @param mintParams       The token gated mint params.
+     * @param nftContract       The nft contract to mint.
+     * @param feeRecipient      The fee recipient.
+     * @param minterIfNotPayer  The mint recipient if different than the payer.
+     * @param mintParams        The token gated mint params.
+     * @param provFeeBps        The fee basis point for provenance.
+     * @param provFeeRecipient  The factory contract address.
      */
     function mintAllowedTokenHolder(
         address nftContract,
         address feeRecipient,
         address minterIfNotPayer,
-        TokenGatedMintParams calldata mintParams
+        TokenGatedMintParams calldata mintParams,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable override {
         // Get the minter address.
         address minter = minterIfNotPayer != address(0)
@@ -592,7 +613,9 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
             dropStage.mintPrice,
             dropStage.dropStageIndex,
             dropStage.feeBps,
-            feeRecipient
+            feeRecipient,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -712,14 +735,17 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param nftContract  The nft contract.
      * @param feeRecipient The fee recipient.
      * @param feeBps       The fee basis points.
+     * @param provFeeBps   The fee basis point for provenance.
      */
     function _splitPayout(
         address nftContract,
         address feeRecipient,
-        uint256 feeBps
+        address provFeeRecipient,
+        uint256 feeBps,
+        uint256 provFeeBps
     ) internal {
-        // Revert if the fee basis points is greater than 10_000.
-        if (feeBps > 10_000) {
+        // Revert if the basis points are greater than 10_000.
+        if ((feeBps + provFeeBps) > 10_000) {
             revert InvalidFeeBps(feeBps);
         }
 
@@ -733,20 +759,23 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
 
         // msg.value has already been validated by this point, so can use it directly.
 
-        // If the fee is zero, just transfer to the creator and return.
-        if (feeBps == 0) {
+        // If fees are zero, just transfer to the creator and return.
+        if (feeBps == 0 && provFeeBps == 0) {
             SafeTransferLib.safeTransferETH(creatorPayoutAddress, msg.value);
             return;
         }
 
-        // Get the fee amount.
-        // Note that the fee amount is rounded down in favor of the creator.
+        // Get the fee amounts.
+        // Note that the fee amounts are rounded down in favor of the creator.
         uint256 feeAmount = (msg.value * feeBps) / 10_000;
+        uint256 provFeeAmount = (msg.value * provFeeBps) / 10_000;
 
         // Get the creator payout amount. Fee amount is <= msg.value per above.
+
+        // Calculate the remaining payout amount for the creator.
         uint256 payoutAmount;
         unchecked {
-            payoutAmount = msg.value - feeAmount;
+            payoutAmount = msg.value - feeAmount - provFeeAmount;
         }
 
         // Transfer the fee amount to the fee recipient.
@@ -754,21 +783,30 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
             SafeTransferLib.safeTransferETH(feeRecipient, feeAmount);
         }
 
+        // Transfer Provenance fee amount to the factory contract.
+        if (provFeeAmount > 0) {
+            SafeTransferLib.safeTransferETH(provFeeRecipient, provFeeAmount);
+        }
+
         // Transfer the creator payout amount to the creator.
-        SafeTransferLib.safeTransferETH(creatorPayoutAddress, payoutAmount);
+        if (payoutAmount > 0) {
+            SafeTransferLib.safeTransferETH(creatorPayoutAddress, payoutAmount);
+        }
     }
 
     /**
      * @notice Mints a number of tokens, splits the payment,
      *         and emits an event.
      *
-     * @param nftContract    The nft contract.
-     * @param minter         The mint recipient.
-     * @param quantity       The number of tokens to mint.
-     * @param mintPrice      The mint price per token.
-     * @param dropStageIndex The drop stage index.
-     * @param feeBps         The fee basis points.
-     * @param feeRecipient   The fee recipient.
+     * @param nftContract       The nft contract.
+     * @param minter            The mint recipient.
+     * @param quantity          The number of tokens to mint.
+     * @param mintPrice         The mint price per token.
+     * @param dropStageIndex    The drop stage index.
+     * @param feeBps            The fee basis points.
+     * @param feeRecipient      The fee recipient.
+     * @param provFeeBps        The fee basis point for provenance.
+     * @param provFeeRecipient  The factory contract address.
      */
     function _mintAndPay(
         address nftContract,
@@ -777,14 +815,22 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
         uint256 mintPrice,
         uint256 dropStageIndex,
         uint256 feeBps,
-        address feeRecipient
+        address feeRecipient,
+        uint256 provFeeBps,
+        address provFeeRecipient
     ) internal nonReentrant {
         // Mint the token(s).
         INonFungibleSeaDropToken(nftContract).mintSeaDrop(minter, quantity);
 
         if (mintPrice != 0) {
             // Split the payment between the creator and fee recipient.
-            _splitPayout(nftContract, feeRecipient, feeBps);
+            _splitPayout(
+                nftContract,
+                feeRecipient,
+                provFeeRecipient,
+                feeBps,
+                provFeeBps
+            );
         }
 
         // Emit an event for the mint.

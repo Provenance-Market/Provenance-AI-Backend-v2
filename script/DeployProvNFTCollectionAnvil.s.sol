@@ -15,12 +15,14 @@ contract DeployProvNFTCollection is Script {
     address seadrop = 0x5FbDB2315678afecb367f032d93F642f64180aa3; // SeaDrop deployed on Anvil
     address creator = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // 1st anvil account
     address feeRecipient = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; // 2nd account
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     // Token config
     uint256 maxSupply = 100;
 
     // Drop config
     uint16 feeBps = 500; // 5%
+    uint16 provFeeBps = 100; // 1%
     uint80 mintPrice = 0.0001 ether;
     uint16 maxTotalMintableByWallet = 5;
 
@@ -61,7 +63,9 @@ contract DeployProvNFTCollection is Script {
             address(token),
             feeRecipient,
             address(0),
-            1 // quantity
+            1, // quantity
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }

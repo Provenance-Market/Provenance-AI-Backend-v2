@@ -13,13 +13,16 @@ contract DeployAndConfigureExampleToken is Script {
     // Addresses
     address seadrop = 0x00005EA00Ac477B1030CE78506496e8C2dE24bf5;
     address creator = 0x41196385fB1ec44F30c2E64D789dBa2ba004Bb24;
-    address feeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
+    address feeRecipient = 0x0000a26b00c1F0DF003000390027140000fAa719; // OpenSea's addy
+    // TODO: fill provFeeRecipient with the deployed factory address
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E; // factory contract
 
     // Token config
     uint256 maxSupply = 100;
 
     // Drop config
-    uint16 feeBps = 500; // 5%
+    uint16 feeBps = 1000; // 10%
+    uint16 provFeeBps = 100; // 1%
     uint80 mintPrice = 0.0001 ether;
     uint16 maxTotalMintableByWallet = 5;
 
@@ -60,7 +63,9 @@ contract DeployAndConfigureExampleToken is Script {
             address(token),
             feeRecipient,
             address(0),
-            1 // quantity
+            1, // quantity
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }

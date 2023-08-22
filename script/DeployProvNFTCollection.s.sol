@@ -15,12 +15,14 @@ contract DeployProvNFTCollection is Script {
     address seadrop = 0x00005EA00Ac477B1030CE78506496e8C2dE24bf5;
     address creator = 0x41196385fB1ec44F30c2E64D789dBa2ba004Bb24;
     address feeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     // Token config
     uint256 maxSupply = 100;
 
     // Drop config
     uint16 feeBps = 500; // 5%
+    uint16 provFeeBps = 100; // 1%
     uint80 mintPrice = 0.0001 ether;
     uint16 maxTotalMintableByWallet = 5;
 
@@ -61,7 +63,9 @@ contract DeployProvNFTCollection is Script {
             address(token),
             feeRecipient,
             address(0),
-            1 // quantity
+            1, // quantity
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }

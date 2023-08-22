@@ -22,12 +22,14 @@ contract ProvNFTCollection is ERC721SeaDrop {
         public
         payable
     {
+        // TODO: test only owner can generate images from their collection
         _onlyAllowedSeaDrop(msg.sender);
 
         require(
             msg.value >= _cost,
             "Insufficient payment amount for AI image generation"
         );
+        // TODO: transfer funds to factory contract
         emit PayFee(_owner);
     }
 
@@ -37,7 +39,7 @@ contract ProvNFTCollection is ERC721SeaDrop {
         address to,
         uint256 startTokenId,
         uint256 quantity
-    ) internal virtual override {
+    ) internal override {
         super._afterTokenTransfers(from, to, startTokenId, quantity);
 
         // Append minted token IDs to the s_collectionNFTs array
