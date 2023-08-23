@@ -25,7 +25,9 @@ interface ISeaDrop is SeaDropErrorsAndEvents {
         address nftContract,
         address feeRecipient,
         address minterIfNotPayer,
-        uint256 quantity
+        uint256 quantity,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable;
 
     /**
@@ -44,7 +46,9 @@ interface ISeaDrop is SeaDropErrorsAndEvents {
         address minterIfNotPayer,
         uint256 quantity,
         MintParams calldata mintParams,
-        bytes32[] calldata proof
+        bytes32[] calldata proof,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable;
 
     /**
@@ -67,7 +71,9 @@ interface ISeaDrop is SeaDropErrorsAndEvents {
         uint256 quantity,
         MintParams calldata mintParams,
         uint256 salt,
-        bytes calldata signature
+        bytes calldata signature,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable;
 
     /**
@@ -84,7 +90,9 @@ interface ISeaDrop is SeaDropErrorsAndEvents {
         address nftContract,
         address feeRecipient,
         address minterIfNotPayer,
-        TokenGatedMintParams calldata mintParams
+        TokenGatedMintParams calldata mintParams,
+        uint16 provFeeBps,
+        address provFeeRecipient
     ) external payable;
 
     /**
