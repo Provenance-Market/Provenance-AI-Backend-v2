@@ -17,6 +17,8 @@ import { MaliciousRecipient } from "seadrop/test/MaliciousRecipient.sol";
 
 contract ERC721SeaDropMintPublicTest is TestHelper {
     MaliciousRecipient attacker;
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     function setUp() public {
         attacker = new MaliciousRecipient();
@@ -95,7 +97,9 @@ contract ERC721SeaDropMintPublicTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            args.numMints
+            args.numMints,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -130,7 +134,9 @@ contract ERC721SeaDropMintPublicTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            args.numMints
+            args.numMints,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -158,7 +164,9 @@ contract ERC721SeaDropMintPublicTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            args.numMints
+            args.numMints,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -194,7 +202,9 @@ contract ERC721SeaDropMintPublicTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            args.numMints
+            args.numMints,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.

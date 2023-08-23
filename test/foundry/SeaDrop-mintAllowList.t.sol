@@ -12,6 +12,9 @@ import { AllowListData, MintParams } from "seadrop/lib/SeaDropStructs.sol";
 import { Merkle } from "murky/Merkle.sol";
 
 contract ERC721DropTest is TestHelper {
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
+
     modifier validateAllowList(FuzzInputs memory args) {
         for (uint256 i = 0; i < 10; i++) {
             vm.assume(
@@ -116,7 +119,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[0],
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
 
         assertEq(token.balanceOf(args.allowList[0]), args.numMints);
@@ -182,7 +187,9 @@ contract ERC721DropTest is TestHelper {
             args.minter, // fuzzed minter is not on allowList
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -255,7 +262,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[4], // proof refers to address at allowList[0]
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -321,7 +330,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[0],
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -387,7 +398,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[0],
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -457,7 +470,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[0],
             100,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -517,7 +532,9 @@ contract ERC721DropTest is TestHelper {
             args.allowList[0],
             args.numMints,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.

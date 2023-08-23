@@ -40,6 +40,8 @@ contract TestSeaDropSnapshot is TestHelper {
     Merkle tree;
     bytes signature;
     bytes signature2098;
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
     MintParams mintParams;
     SignedMintValidationParams signedMintValidationParams;
 
@@ -186,7 +188,9 @@ contract TestSeaDropSnapshot is TestHelper {
             address(snapshotToken),
             address(5),
             address(0),
-            1
+            1,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -197,7 +201,9 @@ contract TestSeaDropSnapshot is TestHelper {
             address(0),
             1,
             mintParams,
-            proof
+            proof,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -214,7 +220,9 @@ contract TestSeaDropSnapshot is TestHelper {
             address(snapshotToken),
             address(5),
             address(0),
-            tokenGatedMintParams
+            tokenGatedMintParams,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -226,7 +234,9 @@ contract TestSeaDropSnapshot is TestHelper {
             1,
             mintParams,
             1010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }

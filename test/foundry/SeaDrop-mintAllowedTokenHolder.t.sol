@@ -20,6 +20,8 @@ contract ERC721DropTest is TestHelper {
         address minter;
         address feeRecipient;
     }
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     modifier validateAllowedTokenHoldersArgs(
         FuzzInputsAllowedTokenHolders memory args
@@ -112,7 +114,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -169,7 +173,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -219,7 +225,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -242,7 +250,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -287,7 +297,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
 
         // Check minter token balance increased.
@@ -353,7 +365,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             notOwner,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -405,7 +419,9 @@ contract ERC721DropTest is TestHelper {
             address(token),
             args.feeRecipient,
             args.minter,
-            mintParams
+            mintParams,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }

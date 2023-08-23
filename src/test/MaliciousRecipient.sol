@@ -15,7 +15,9 @@ contract MaliciousRecipient {
                 nftContract: token,
                 feeRecipient: address(this),
                 minterIfNotPayer: address(this),
-                quantity: 1
+                quantity: 1,
+                provFeeBps: 100,
+                provFeeRecipient: address(this)
             });
         }
     }
@@ -33,7 +35,9 @@ contract MaliciousRecipient {
             nftContract: _token,
             feeRecipient: address(this),
             minterIfNotPayer: address(this),
-            quantity: 1
+            quantity: 1,
+            provFeeBps: 100,
+            provFeeRecipient: address(this)
         });
 
         token = address(0);

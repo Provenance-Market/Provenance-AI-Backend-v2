@@ -13,6 +13,8 @@ import { PublicDrop } from "../../src/lib/SeaDropStructs.sol";
 
 contract ERC721SeaDropCloneFactoryTest is Test {
     ERC721SeaDropCloneFactory factory;
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     function setUp() public {
         factory = new ERC721SeaDropCloneFactory();
@@ -64,7 +66,9 @@ contract ERC721SeaDropCloneFactoryTest is Test {
             address(token),
             address(1),
             address(0),
-            1
+            1,
+            provFeeBps,
+            provFeeRecipient
         );
         assertEq(token.totalSupply(), 1);
         assertEq(token.ownerOf(1), address(this));

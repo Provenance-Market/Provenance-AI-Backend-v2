@@ -16,6 +16,8 @@ contract SeaDropMintSignedTest is TestHelper {
     using ECDSA for bytes32;
     ERC721PartnerSeaDrop token2;
     SignedMintValidationParams signedMintValidationParams;
+    uint16 provFeeBps = 100;
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     event Transfer(
         address indexed from,
@@ -122,7 +124,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
 
         assertEq(token.balanceOf(args.minter), args.numMints);
@@ -195,7 +199,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
 
         {
@@ -223,7 +229,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -312,7 +320,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -368,7 +378,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
 
         assertEq(token.balanceOf(args.minter), args.numMints);
@@ -437,7 +449,9 @@ contract SeaDropMintSignedTest is TestHelper {
             args.numMints,
             mintParams,
             args.salt,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -496,7 +510,9 @@ contract SeaDropMintSignedTest is TestHelper {
             1,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -563,7 +579,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -627,7 +645,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -691,7 +711,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -751,7 +773,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -811,7 +835,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -875,7 +901,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -935,7 +963,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -995,7 +1025,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 
@@ -1053,7 +1085,9 @@ contract SeaDropMintSignedTest is TestHelper {
             2,
             mintParams,
             101010101010101,
-            signature
+            signature,
+            provFeeBps,
+            provFeeRecipient
         );
     }
 }
