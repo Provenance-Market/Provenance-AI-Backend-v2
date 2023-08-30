@@ -19,7 +19,7 @@ contract ProvNFTCollection is ERC721SeaDrop {
     }
 
     function imageGenerationPayment(uint256 _cost, address _owner)
-        public
+        external
         payable
     {
         // TODO: test only owner can generate images from their collection

@@ -8,10 +8,12 @@ remappings = [
     'ds-test/=lib/forge-std/lib/ds-test/src/',
     'seadrop/=src/',
 ]
+optimizer = true
 optimizer_runs = 1_000_000
-# via_ir = true
+via_ir = true
 ignored_error_codes = []
 bytecode_hash = "none"
+ffi = false
 
 [profile.upgradeable]
 src = 'src-upgradeable/src/'
@@ -22,5 +24,6 @@ test = 'src'
 [rpc_endpoints]
 goerli = '${GOERLI_RPC_URL}'
 mainnet = '${ETHEREUM_RPC_URL}'
+etherscan_api_key = '${ETHERSCAN_API_KEY}'
 
-# See more config options https://github.com/foundry-rs/foundry/tree/master/config
+# See more config options https://github.com/foundry-rs/foundry/blob/f95fb9b543cab101e89b9d29f9b330c1203d4e33/crates/config/README.md?plain=1#L89
