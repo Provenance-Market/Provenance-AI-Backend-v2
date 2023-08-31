@@ -180,7 +180,7 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param minterIfNotPayer  The mint recipient if different than the payer.
      * @param quantity          The number of tokens to mint.
      * @param provFeeBps        The fee basis point for provenance.
-     * @param provFeeRecipient  The factory contract address.
+     * @param provFeeRecipient  The provenance multisig wallet.
      */
     function mintPublic(
         address nftContract,
@@ -254,7 +254,7 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param mintParams        The mint parameters.
      * @param proof             The proof for the leaf of the allow list.
      * @param provFeeBps        The fee basis point for provenance.
-     * @param provFeeRecipient  The factory contract address.
+     * @param provFeeRecipient  The provenance multisig wallet.
      */
     function mintAllowList(
         address nftContract,
@@ -340,7 +340,7 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param salt              The salt for the signed mint.
      * @param signature         The server-side signature, must be an allowed signer.
      * @param provFeeBps        The fee basis point for provenance.
-     * @param provFeeRecipient  The factory contract address.
+     * @param provFeeRecipient  The provenance multisig wallet.
      */
     function mintSigned(
         address nftContract,
@@ -512,7 +512,7 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param minterIfNotPayer  The mint recipient if different than the payer.
      * @param mintParams        The token gated mint params.
      * @param provFeeBps        The fee basis point for provenance.
-     * @param provFeeRecipient  The factory contract address.
+     * @param provFeeRecipient  The provenance multisig wallet.
      */
     function mintAllowedTokenHolder(
         address nftContract,
@@ -806,7 +806,7 @@ contract SeaDrop is ISeaDrop, ReentrancyGuard {
      * @param feeBps            The fee basis points.
      * @param feeRecipient      The fee recipient.
      * @param provFeeBps        The fee basis point for provenance.
-     * @param provFeeRecipient  The factory contract address.
+     * @param provFeeRecipient  The provenance multisig wallet.
      */
     function _mintAndPay(
         address nftContract,

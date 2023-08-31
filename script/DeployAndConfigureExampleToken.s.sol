@@ -14,8 +14,8 @@ contract DeployAndConfigureExampleToken is Script {
     address seadrop = 0x00005EA00Ac477B1030CE78506496e8C2dE24bf5;
     address creator = 0x41196385fB1ec44F30c2E64D789dBa2ba004Bb24;
     address feeRecipient = 0x0000a26b00c1F0DF003000390027140000fAa719; // OpenSea's addy
-    // TODO: fill provFeeRecipient with the deployed factory address
-    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E; // factory contract
+    // TODO: fill provFeeRecipient with our multiSig wallet
+    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
     // Token config
     uint256 maxSupply = 100;

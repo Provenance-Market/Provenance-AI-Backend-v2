@@ -5,13 +5,8 @@ import { ProvNFTCollection } from "./ProvNFTCollection.sol";
 
 contract ProvNFTFactory {
     mapping(address => ProvNFTCollection[]) private ownerCollections;
-    address private s_multiSig;
 
     event ProvNFTCreated(address owner, address deployedContract);
-
-    constructor(address _ownersMultiSigWallet) {
-        s_multiSig = _ownersMultiSigWallet;
-    }
 
     function createBasicNft(string memory _name, string memory _symbol)
         public

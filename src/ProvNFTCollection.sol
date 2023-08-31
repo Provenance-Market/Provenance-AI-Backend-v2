@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import { SafeTransferLib } from "solmate/utils/SafeTransferLib.sol";
 import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
 
 /// @custom:security-contact contact@prov.ai
@@ -18,10 +19,11 @@ contract ProvNFTCollection is ERC721SeaDrop {
         s_collectionOwner = _allowedSeaDrop[0];
     }
 
-    function imageGenerationPayment(uint256 _cost, address _owner)
-        external
-        payable
-    {
+    function imageGenerationPayment(
+        uint256 _cost,
+        address _owner,
+        address _multiSig
+    ) external payable {
         // TODO: test only owner can generate images from their collection
         _onlyAllowedSeaDrop(msg.sender);
 
@@ -29,7 +31,9 @@ contract ProvNFTCollection is ERC721SeaDrop {
             msg.value >= _cost,
             "Insufficient payment amount for AI image generation"
         );
-        // TODO: transfer funds to factory contract
+        // TODO: test successful transfer of funds to multisig
+        SafeTransferLib.safeTransferETH(_multiSig, msg.value);
+
         emit PayFee(_owner);
     }
 
