@@ -2,22 +2,11 @@
 pragma solidity ^0.8.17;
 
 import { ProvNFTCollection } from "./ProvNFTCollection.sol";
-import {
-    PaymentSplitter
-} from "openzeppelin-contracts/finance/PaymentSplitter.sol";
 
-contract ProvNFTFactory is PaymentSplitter {
-    ProvNFTCollection[] public deployedContracts;
+contract ProvNFTFactory {
     mapping(address => ProvNFTCollection[]) private ownerCollections;
-    address[] private s_owners;
 
     event ProvNFTCreated(address owner, address deployedContract);
-
-    constructor(address[] memory _payees, uint256[] memory _shares)
-        PaymentSplitter(_payees, _shares)
-    {
-        s_owners = _payees;
-    }
 
     function createBasicNft(string memory _name, string memory _symbol)
         public
@@ -34,19 +23,17 @@ contract ProvNFTFactory is PaymentSplitter {
         );
 
         ownerCollections[collectionOwner].push(newBasicNft);
-        deployedContracts.push(newBasicNft);
 
         emit ProvNFTCreated(collectionOwner, address(newBasicNft));
         return address(newBasicNft);
     }
 
-    // Helper functions
-    function getOwnerCollection(uint256 _collectionIndex)
-        private
-        view
-        returns (ProvNFTCollection)
-    {
-        ProvNFTCollection ownerCollection = ownerCollections[msg.sender][
+    // Getter functions
+    function getOwnerCollection(
+        address collectionOwner,
+        uint256 _collectionIndex
+    ) external view returns (ProvNFTCollection) {
+        ProvNFTCollection ownerCollection = ownerCollections[collectionOwner][
             _collectionIndex
         ];
         require(
@@ -56,20 +43,11 @@ contract ProvNFTFactory is PaymentSplitter {
         return ownerCollection;
     }
 
-    // Getter functions
     function getOwnerCollections(address owner)
-        public
+        external
         view
         returns (ProvNFTCollection[] memory)
     {
         return ownerCollections[owner];
-    }
-
-    function getDeployedContracts()
-        public
-        view
-        returns (ProvNFTCollection[] memory)
-    {
-        return deployedContracts;
     }
 }

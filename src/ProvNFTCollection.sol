@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import { SafeTransferLib } from "solmate/utils/SafeTransferLib.sol";
 import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
 
 /// @custom:security-contact contact@prov.ai
 contract ProvNFTCollection is ERC721SeaDrop {
-    address[] private s_collectionOwner;
-    uint256[] private s_collectionNFTs;
+    address public s_collectionOwner;
+    uint256[] public s_collectionNFTs;
 
     event PayFee(address indexed sender);
 
@@ -15,13 +16,14 @@ contract ProvNFTCollection is ERC721SeaDrop {
         string memory _symbol,
         address[] memory _allowedSeaDrop
     ) ERC721SeaDrop(_name, _symbol, _allowedSeaDrop) {
-        s_collectionOwner = _allowedSeaDrop;
+        s_collectionOwner = _allowedSeaDrop[0];
     }
 
-    function imageGenerationPayment(uint256 _cost, address _owner)
-        external
-        payable
-    {
+    function imageGenerationPayment(
+        uint256 _cost,
+        address _owner,
+        address _multiSig
+    ) external payable {
         // TODO: test only owner can generate images from their collection
         _onlyAllowedSeaDrop(msg.sender);
 
@@ -29,7 +31,9 @@ contract ProvNFTCollection is ERC721SeaDrop {
             msg.value >= _cost,
             "Insufficient payment amount for AI image generation"
         );
-        // TODO: transfer funds to factory contract
+        // TODO: test successful transfer of funds to multisig
+        SafeTransferLib.safeTransferETH(_multiSig, msg.value);
+
         emit PayFee(_owner);
     }
 
@@ -47,14 +51,5 @@ contract ProvNFTCollection is ERC721SeaDrop {
             uint256 tokenId = startTokenId + i;
             s_collectionNFTs.push(tokenId);
         }
-    }
-
-    // Getter functions for private variables
-    function getCollectionOwner() public view returns (address[] memory) {
-        return s_collectionOwner;
-    }
-
-    function getCollectionNFTs() public view returns (uint256[] memory) {
-        return s_collectionNFTs;
     }
 }
