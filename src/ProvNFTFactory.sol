@@ -8,7 +8,7 @@ contract ProvNFTFactory {
 
     event ProvNFTCreated(address owner, address deployedContract);
 
-    function createBasicNft(string memory _name, string memory _symbol)
+    function createNFTCollection(string memory _name, string memory _symbol)
         public
         returns (address)
     {

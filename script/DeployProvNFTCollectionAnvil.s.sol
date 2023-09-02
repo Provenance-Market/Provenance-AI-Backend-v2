@@ -3,7 +3,6 @@ pragma solidity 0.8.17;
 
 import "forge-std/Script.sol";
 
-// import { ERC721SeaDrop } from "../src/ERC721SeaDrop.sol";
 import { ProvNFTCollection } from "../src/ProvNFTCollection.sol";
 
 import { ISeaDrop } from "../src/interfaces/ISeaDrop.sol";
@@ -13,11 +12,11 @@ import { PublicDrop } from "../src/lib/SeaDropStructs.sol";
 contract DeployProvNFTCollection is Script {
     // Addresses
     address seadrop = 0x5FbDB2315678afecb367f032d93F642f64180aa3; // SeaDrop deployed on Anvil
-    address creator = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // 1st anvil account
-    address feeRecipient = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; // 2nd account
-    address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E; // change to a prov multiSig
+    address creator = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // 1st anvil account posing as the nft collection creator
+    address feeRecipient = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; // 2nd anvil account account posing as the OpenSea addy
+    address provFeeRecipient = 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC; // 3rd anvil account posing as the prov multiSig
 
-    // Token config
+    // Collection config
     uint256 maxSupply = 100;
 
     // Drop config
@@ -32,21 +31,19 @@ contract DeployProvNFTCollection is Script {
         address[] memory allowedSeadrop = new address[](1);
         allowedSeadrop[0] = seadrop;
 
-        // This example uses ERC721SeaDrop. For separate Owner and
-        // Administrator privileges, use ERC721PartnerSeaDrop.
-        ProvNFTCollection token = new ProvNFTCollection(
-            "Prov SeaDrop Token",
-            "PSDT",
+        ProvNFTCollection collection = new ProvNFTCollection(
+            "Prov SeaDrop Collection",
+            "PSDC",
             allowedSeadrop
         );
 
-        // Configure the token.
-        token.setMaxSupply(maxSupply);
+        // Configure the collection.
+        collection.setMaxSupply(maxSupply);
 
         // Configure the drop parameters.
-        token.updateCreatorPayoutAddress(seadrop, creator);
-        token.updateAllowedFeeRecipient(seadrop, feeRecipient, true);
-        token.updatePublicDrop(
+        collection.updateCreatorPayoutAddress(seadrop, creator);
+        collection.updateAllowedFeeRecipient(seadrop, feeRecipient, true);
+        collection.updatePublicDrop(
             seadrop,
             PublicDrop(
                 mintPrice,
@@ -58,12 +55,12 @@ contract DeployProvNFTCollection is Script {
             )
         );
 
-        // We are ready, let's mint the first 3 tokens!
-        ISeaDrop(seadrop).mintPublic{ value: mintPrice * 1 }(
-            address(token),
+        // We are ready, let's mint the first 3 collections!
+        ISeaDrop(seadrop).mintPublic{ value: mintPrice * 3 }(
+            address(collection),
             feeRecipient,
             address(0),
-            1, // quantity
+            3, // quantity
             provFeeBps,
             provFeeRecipient
         );

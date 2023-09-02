@@ -17,11 +17,11 @@ contract DeployProvNFTCollection is Script {
     address feeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
     address provFeeRecipient = 0xC61E892F43ea5fbecb654c7e166A4fF96576969E;
 
-    // Token config
+    // Collection config
     uint256 maxSupply = 100;
 
     // Drop config
-    uint16 feeBps = 500; // 5%
+    uint16 feeBps = 1000; // 10%
     uint16 provFeeBps = 100; // 1%
     uint80 mintPrice = 0.0001 ether;
     uint16 maxTotalMintableByWallet = 5;
@@ -32,21 +32,19 @@ contract DeployProvNFTCollection is Script {
         address[] memory allowedSeadrop = new address[](1);
         allowedSeadrop[0] = seadrop;
 
-        // This example uses ERC721SeaDrop. For separate Owner and
-        // Administrator privileges, use ERC721PartnerSeaDrop.
-        ProvNFTCollection token = new ProvNFTCollection(
-            "Prov SeaDrop Token 2",
-            "PSDT2",
+        ProvNFTCollection collection = new ProvNFTCollection(
+            "Prov SeaDrop Collection 1",
+            "PSDC1",
             allowedSeadrop
         );
 
-        // Configure the token.
-        token.setMaxSupply(maxSupply);
+        // Configure the collection.
+        collection.setMaxSupply(maxSupply);
 
         // Configure the drop parameters.
-        token.updateCreatorPayoutAddress(seadrop, creator);
-        token.updateAllowedFeeRecipient(seadrop, feeRecipient, true);
-        token.updatePublicDrop(
+        collection.updateCreatorPayoutAddress(seadrop, creator);
+        collection.updateAllowedFeeRecipient(seadrop, feeRecipient, true);
+        collection.updatePublicDrop(
             seadrop,
             PublicDrop(
                 mintPrice,
@@ -58,9 +56,9 @@ contract DeployProvNFTCollection is Script {
             )
         );
 
-        // We are ready, let's mint the first 3 tokens!
+        // We are ready, let's mint the first collection!
         ISeaDrop(seadrop).mintPublic{ value: mintPrice * 1 }(
-            address(token),
+            address(collection),
             feeRecipient,
             address(0),
             1, // quantity
