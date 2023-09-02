@@ -14,11 +14,11 @@ contract DeployProvNFTFactory is Script {
         ProvNFTFactory factory = new ProvNFTFactory();
 
         // Create a couple of NFT collections for testing
-        address collection1 = factory.createNFTCollection("Collection 1", "C1");
-        address collection2 = factory.createNFTCollection("Collection 2", "C2");
+        // address collection1 = factory.createNFTCollection("Collection 1", "C1");
+        // address collection2 = factory.createNFTCollection("Collection 2", "C2");
 
         // Print the addresses of the new collections
-        console.log("Collection 1 created at address:", collection1);
-        console.log("Collection 2 created at address:", collection2);
+        // console.log("Collection 1 created at address:", collection1);
+        // console.log("Collection 2 created at address:", collection2);
     }
 }
