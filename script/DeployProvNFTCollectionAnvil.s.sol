@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "forge-std/Script.sol";
+import { Script, console } from "forge-std/Script.sol";
 
 import { ProvNFTCollection } from "../src/ProvNFTCollection.sol";
 
@@ -37,6 +37,8 @@ contract DeployProvNFTCollection is Script {
             allowedSeadrop
         );
 
+        console.log("Collection Contract Address: ", address(collection));
+
         // Configure the collection.
         collection.setMaxSupply(maxSupply);
 
@@ -53,16 +55,6 @@ contract DeployProvNFTCollection is Script {
                 feeBps,
                 true
             )
-        );
-
-        // We are ready, let's mint the first 3 collections!
-        ISeaDrop(seadrop).mintPublic{ value: mintPrice * 3 }(
-            address(collection),
-            feeRecipient,
-            address(0),
-            3, // quantity
-            provFeeBps,
-            provFeeRecipient
         );
     }
 }
