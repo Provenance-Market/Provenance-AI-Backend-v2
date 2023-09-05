@@ -124,6 +124,29 @@ forge create src/SeaDrop.sol:SeaDrop --rpc-url $SEPOLIA_RPC_URL -vvvv --private-
 forge script script/DeployProvNFTCollection.s.sol --rpc-url $SEPOLIA_RPC_URL --broadcast -vvvv --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify --retries 10
 ```
 
+## Helpful Contract Functions
+
+All these methods will be called on the collection contract because of inheretance, besides the functions defined in the factory contract
+
+| Function                   | Parameters                                              | Defined In Contract    | Description                                                     |
+| -------------------------- | ------------------------------------------------------- | ---------------------- | --------------------------------------------------------------- |
+| imageGenerationPayment     | uint256 \_cost, address \_owner, address \_multiSig     | ProvNFTCollection      | Only allows owner to generate images                            |
+| tokenURI                   | uint256 tokenId                                         | ERC721SeaDrop          | Returns just the base URI                                       |
+| mintSeaDrop                | address minter, uint256 quantity                        | ERC721SeaDrop          | Lets only the collection owner to add NFTs to their collection  |
+| updatePublicDrop           | address seaDropImpl, PublicDrop calldata publicDrop     | ERC721SeaDrop          | Lets the owner set their drop schedule and drop earnings        |
+| updateCreatorPayoutAddress | address seaDropImpl, address payoutAddress              | ERC721SeaDrop          | Set the creator payout address for this collection on SeaDrop   |
+| updateAllowedFeeRecipient  | address seaDropImpl, address feeRecipient, bool allowed | ERC721SeaDrop          | Set the OpenSea address that will collect the service fees      |
+| setBaseURI                 | string newBaseURI                                       | ERC721ContractMetadata | Sets the base URI for the token metadata and emits an event     |
+| setMaxSupply               | uint256 newMaxSupply                                    | ERC721ContractMetadata | Sets the max amount of NFTs that can be added to the collection |
+| setRoyaltyInfo             | RoyaltyInfo newInfo                                     | ERC721ContractMetadata | Sets the address and basis points for royalties                 |
+| name                       |                                                         | ERC721A                | View the collection name                                        |
+| symbol                     |                                                         | ERC721A                | View the collection symbol                                      |
+| totalSupply                |                                                         | ERC721A                | View total number of tokens in existence                        |
+| balanceOf                  | address owner                                           | ERC721A                | View the number of tokens in `owner`'s account                  |
+| tokenURI                   | uint256 tokenId                                         | ERC721A                | View the URI for any NFT in a collection                        |
+| approve                    | address operator, uint256 tokenId                       | ERC721A                | Allows an address to transfer NFT on behalf of the owner        |
+| safeTransferFrom           | address from, address to, uint256 tokenId               | ERC721A                | Approved caller can transfer NFT                                |
+
 ## Authors
 
 👤 [**Eddie**](https://github.com/Ed-Marcavage), [**AJ**](https://github.com/aaronjan98), [**Jake**](https://github.com/masonjake), [**Rohith**](https://github.com/Rohith09)
