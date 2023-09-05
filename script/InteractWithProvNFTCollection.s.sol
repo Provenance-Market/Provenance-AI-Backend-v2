@@ -20,7 +20,7 @@ contract InteractWithProvNFTCollection is Script {
     function run() external {
         vm.startBroadcast();
 
-        ISeaDrop(seadrop).mintPublic{ value: mintPrice * 3 }(
+        ISeaDrop(seadrop).mintPublic{ value: mintPrice }(
             collection,
             feeRecipient,
             address(0),

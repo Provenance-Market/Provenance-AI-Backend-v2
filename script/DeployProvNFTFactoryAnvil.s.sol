@@ -3,22 +3,26 @@ pragma solidity 0.8.17;
 
 import { Script, console } from "forge-std/Script.sol";
 import { ProvNFTFactory } from "../src/ProvNFTFactory.sol";
+import { IProvNFTFactory } from "../src/interfaces/IProvNFTFactory.sol";
 
 contract DeployProvNFTFactory is Script {
-    address creator1 = 0x90F79bf6EB2c4f870365E785982E1f101E93b906; // 4th anvil account posing as an nft collection creator
-    address creator2 = 0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65; // 5th anvil account account posing as another collection creator
+    // Addresses
+    address seadrop = 0x5FbDB2315678afecb367f032d93F642f64180aa3; // SeaDrop deployed on Anvil
+    address creator = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // 1st anvil account posing as the nft collection creator
+    address feeRecipient = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; // 2nd anvil account account posing as the OpenSea addy
+    address provFeeRecipient = 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC; // 3rd anvil account posing as the prov multiSig
+
+    address factoryAddress = 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512; // Address of the ProvNFTFactory contract
 
     function run() external {
         vm.startBroadcast();
 
-        ProvNFTFactory factory = new ProvNFTFactory();
+        IProvNFTFactory factory = IProvNFTFactory(factoryAddress);
 
         // Create a couple of NFT collections for testing
-        address collection1 = factory.createNFTCollection("Collection 1", "C1");
-        address collection2 = factory.createNFTCollection("Collection 2", "C2");
+        address collection3 = factory.createNFTCollection("Collection 3", "C3");
 
         // Print the addresses of the new collections
-        console.log("Collection 1 created at address:", collection1);
-        console.log("Collection 2 created at address:", collection2);
+        console.log("Collection 3 created at address:", collection3);
     }
 }

@@ -100,10 +100,18 @@ forge create --rpc-url http://127.0.0.1:8545 src/SeaDrop.sol:SeaDrop --private-k
 - copy the address of the deployed SeaDrop contract and paste it as the `seadrop` address in the deploy script, `script/DeployProvNFTCollectionAnvil.s.sol`
   - this is already done, but check that the address matches
 
-5. Deploy Collection contract
+5. Deploy Factory contract
 
 ```sh
-forge script script/DeployProvNFTCollectionAnvil.s.sol --rpc-url http://127.0.0.1:8545 --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge create --rpc-url http://127.0.0.1:8545 src/ProvNFTFactory.sol:ProvNFTFactory --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+
+6. Run Factory Interactions script
+
+- TODO: Rename script filename
+
+```sh
+forge script script/DeployProvNFTFactoryAnvil.s.sol --rpc-url http://127.0.0.1:8545 --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
 ## Sepolia Deployment & Verification
@@ -126,7 +134,7 @@ forge script script/DeployProvNFTCollection.s.sol --rpc-url $SEPOLIA_RPC_URL --b
 
 ## Helpful Contract Functions
 
-All these methods will be called on the collection contract because of inheretance, besides the functions defined in the factory contract
+All these methods will be called on the collection contract because of inheritance, besides the functions defined in the factory contract
 
 | Function                   | Parameters                                              | Defined In Contract    | Description                                                     |
 | -------------------------- | ------------------------------------------------------- | ---------------------- | --------------------------------------------------------------- |
