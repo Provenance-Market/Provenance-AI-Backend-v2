@@ -153,7 +153,12 @@ forge create src/ProvNFTFactory.sol:ProvNFTFactory --rpc-url $SEPOLIA_RPC_URL -v
 
 | Function                   | Parameters                                              | Defined In Contract    | Description                                                     |
 | -------------------------- | ------------------------------------------------------- | ---------------------- | --------------------------------------------------------------- |
+| createNFTCollection        | string \_name, string \_symbol                          | ProvNFTFactory         | Create SeaDrop compatible NFT collections                       |
+| getOwnerCollections        | address owner                                           | ProvNFTFactory         | Returns all of a user's created collections                     |
+| getOwnerCollection         | address collectionOwner, uint256 \_collectionIndex      | ProvNFTFactory         | Returns a specific user collection                              |
 | imageGenerationPayment     | uint256 \_cost, address \_owner, address \_multiSig     | ProvNFTCollection      | Only allows owner to generate images                            |
+| getCollectionOwner         |                                                         | ProvNFTCollection      | Retrieve the owner of the collection                            |
+| getCollectionNFTs          |                                                         | ProvNFTCollection      | Retrieve all minted NFTs in collection                          |
 | tokenURI                   | uint256 tokenId                                         | ERC721SeaDrop          | Returns just the base URI                                       |
 | mintSeaDrop                | address minter, uint256 quantity                        | ERC721SeaDrop          | Lets only the collection owner to add NFTs to their collection  |
 | updatePublicDrop           | address seaDropImpl, PublicDrop calldata publicDrop     | ERC721SeaDrop          | Lets the owner set their drop schedule and drop earnings        |
