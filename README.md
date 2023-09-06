@@ -124,17 +124,32 @@ forge script script/InteractWithProvNFTFactoryAnvil.s.sol --rpc-url http://127.0
 forge create src/SeaDrop.sol:SeaDrop --rpc-url $SEPOLIA_RPC_URL -vvvv --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify --retries 10
 ```
 
-2. Deploy Collection contract
-
-- Ensure our own SeaDrop address is provided in the deploy script
+2. Deploy Factory contract
 
 ```sh
-forge script script/DeployProvNFTCollection.s.sol --rpc-url $SEPOLIA_RPC_URL --broadcast -vvvv --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify --retries 10
+forge create src/ProvNFTFactory.sol:ProvNFTFactory --rpc-url $SEPOLIA_RPC_URL -vvvv --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify --retries 10
 ```
+
+## Front End Collection Contract Integration
+
+1. Save ABIs to the front end repo by running `forge build` and copying the ABIs from the `out` dir
+
+2. Create instance of the factory contract
+
+3. Call `createNFTCollection` on the factory contract to create user collections
+
+4. Create instance of the newly created collection
+
+5. Call functions on collection to configure the mint and drop parameters
+   - `setMaxSupply`
+   - `setBaseURI`
+   - `updateCreatorPayoutAddress`
+   - `updateAllowedFeeRecipient`
+   - `updatePublicDrop`
 
 ## Helpful Contract Functions
 
-All these methods will be called on the collection contract because of inheritance, besides the functions defined in the factory contract
+- All these methods will be called on the collection contract because of inheritance, besides the functions defined in the factory contract
 
 | Function                   | Parameters                                              | Defined In Contract    | Description                                                     |
 | -------------------------- | ------------------------------------------------------- | ---------------------- | --------------------------------------------------------------- |

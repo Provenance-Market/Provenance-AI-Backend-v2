@@ -6,8 +6,8 @@ import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
 
 /// @custom:security-contact contact@prov.ai
 contract ProvNFTCollection is ERC721SeaDrop {
-    address public s_collectionOwner;
-    uint256[] public s_collectionNFTs;
+    address private s_collectionOwner;
+    uint256[] private s_collectionNFTs;
 
     event PayFee(address indexed sender);
 
@@ -51,5 +51,14 @@ contract ProvNFTCollection is ERC721SeaDrop {
             uint256 tokenId = startTokenId + i;
             s_collectionNFTs.push(tokenId);
         }
+    }
+
+    // Getter functions for private variables
+    function getCollectionOwner() public view returns (address) {
+        return s_collectionOwner;
+    }
+
+    function getCollectionNFTs() public view returns (uint256[] memory) {
+        return s_collectionNFTs;
     }
 }
