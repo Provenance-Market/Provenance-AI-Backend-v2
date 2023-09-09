@@ -10,7 +10,6 @@ remappings = [
     'ds-test/=lib/forge-std/lib/ds-test/src/',
     'seadrop/=src/',
     'utility-contracts/=lib/utility-contracts/src/',
-    'utility-contracts/=lib/utility-contracts/src/',
 ]
 optimizer = true
 optimizer_runs = 1_000_000
