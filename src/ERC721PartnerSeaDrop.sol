@@ -1,18 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
+import {ERC721SeaDrop} from "./ERC721SeaDrop.sol";
 
-import { ISeaDrop } from "./interfaces/ISeaDrop.sol";
+import {ISeaDrop} from "./interfaces/ISeaDrop.sol";
 
-import {
-    AllowListData,
-    PublicDrop,
-    TokenGatedDropStage,
-    SignedMintValidationParams
-} from "./lib/SeaDropStructs.sol";
+import {AllowListData, PublicDrop, TokenGatedDropStage, SignedMintValidationParams} from "./lib/SeaDropStructs.sol";
 
-import { TwoStepAdministered } from "utility-contracts/TwoStepAdministered.sol";
+import {TwoStepAdministered} from "utility-contracts/TwoStepAdministered.sol";
 
 /**
  * @title  ERC721PartnerSeaDrop
@@ -59,11 +54,10 @@ contract ERC721PartnerSeaDrop is ERC721SeaDrop, TwoStepAdministered {
      * @param minter   The address to mint to.
      * @param quantity The number of tokens to mint.
      */
-    function mintSeaDrop(address minter, uint256 quantity)
-        public
-        virtual
-        override
-    {
+    function mintSeaDrop(
+        address minter,
+        uint256 quantity
+    ) public virtual override {
         // Ensure the SeaDrop is allowed.
         _onlyAllowedSeaDrop(msg.sender);
 
@@ -85,11 +79,9 @@ contract ERC721PartnerSeaDrop is ERC721SeaDrop, TwoStepAdministered {
      *
      * @param allowedSeaDrop The allowed SeaDrop addresses.
      */
-    function updateAllowedSeaDrop(address[] calldata allowedSeaDrop)
-        external
-        override
-        onlyOwnerOrAdministrator
-    {
+    function updateAllowedSeaDrop(
+        address[] calldata allowedSeaDrop
+    ) external override onlyOwnerOrAdministrator {
         _updateAllowedSeaDrop(allowedSeaDrop);
     }
 
@@ -228,12 +220,10 @@ contract ERC721PartnerSeaDrop is ERC721SeaDrop, TwoStepAdministered {
      * @param seaDropImpl The allowed SeaDrop contract.
      * @param dropURI     The new drop URI.
      */
-    function updateDropURI(address seaDropImpl, string calldata dropURI)
-        external
-        virtual
-        override
-        onlyOwnerOrAdministrator
-    {
+    function updateDropURI(
+        address seaDropImpl,
+        string calldata dropURI
+    ) external virtual override onlyOwnerOrAdministrator {
         // Ensure the SeaDrop is allowed.
         _onlyAllowedSeaDrop(seaDropImpl);
 
