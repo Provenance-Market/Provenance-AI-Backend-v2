@@ -5,8 +5,11 @@ libs = ['lib']
 solc_version = '0.8.17'
 remappings = [
     'openzeppelin-contracts/=lib/openzeppelin-contracts/contracts',
+    'openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts',
+    'operator-filter-registry/=lib/operator-filter-registry/src/',
     'ds-test/=lib/forge-std/lib/ds-test/src/',
     'seadrop/=src/',
+    'utility-contracts/=lib/utility-contracts/src/',
 ]
 optimizer = true
 optimizer_runs = 1_000_000

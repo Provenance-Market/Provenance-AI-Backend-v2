@@ -1,19 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {
-    ISeaDropTokenContractMetadata
-} from "../interfaces/ISeaDropTokenContractMetadata.sol";
+import {ISeaDropTokenContractMetadata} from "../interfaces/ISeaDropTokenContractMetadata.sol";
 
-import { ERC721ACloneable } from "./ERC721ACloneable.sol";
+import {ERC721ACloneable} from "./ERC721ACloneable.sol";
 
-import { TwoStepOwnable } from "utility-contracts/TwoStepOwnable.sol";
+import {TwoStepOwnable} from "utility-contracts/TwoStepOwnable.sol";
 
-import { IERC2981 } from "openzeppelin-contracts/interfaces/IERC2981.sol";
+import {IERC2981} from "openzeppelin-contracts/interfaces/IERC2981.sol";
 
-import {
-    IERC165
-} from "openzeppelin-contracts/utils/introspection/IERC165.sol";
+import {IERC165} from "openzeppelin-contracts/utils/introspection/IERC165.sol";
 
 /**
  * @title  ERC721ContractMetadataCloneable
@@ -100,9 +96,10 @@ contract ERC721ContractMetadataCloneable is
      * @param fromTokenId The start token id.
      * @param toTokenId   The end token id.
      */
-    function emitBatchMetadataUpdate(uint256 fromTokenId, uint256 toTokenId)
-        external
-    {
+    function emitBatchMetadataUpdate(
+        uint256 fromTokenId,
+        uint256 toTokenId
+    ) external {
         // Ensure the sender is only the owner or contract itself.
         _onlyOwnerOrSelf();
 
@@ -120,7 +117,7 @@ contract ERC721ContractMetadataCloneable is
         _onlyOwnerOrSelf();
 
         // Ensure the max supply does not exceed the maximum value of uint64.
-        if (newMaxSupply > 2**64 - 1) {
+        if (newMaxSupply > 2 ** 64 - 1) {
             revert CannotExceedMaxSupplyOfUint64(newMaxSupply);
         }
 
@@ -272,13 +269,9 @@ contract ERC721ContractMetadataCloneable is
      *
      * @param interfaceId The interface id to check against.
      */
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(IERC165, ERC721ACloneable)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(IERC165, ERC721ACloneable) returns (bool) {
         return
             interfaceId == type(IERC2981).interfaceId ||
             interfaceId == 0x49064906 || // ERC-4906
