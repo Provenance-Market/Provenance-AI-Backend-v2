@@ -1,4 +1,4 @@
-<h1 align="center">Provenance Back End V2</h1>
+<h1 align="center">Provenance Back End | SeaDrop-compatible Collections</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-2.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Provenance-Market/Provenance-AI-Backend-v2" target="_blank">
@@ -13,7 +13,7 @@
 
 ## Links
 
-🏠 [Homepage](https://app.prov.ai) \
+🏠 [Homepage](https://app.prov.ai)
 
 ## Setup
 
@@ -55,7 +55,7 @@ The following modifiers are also available:
 - Level 4 (-vvvv): Stack traces for all tests are displayed, and setup traces for failing tests are displayed.
 - Level 5 (-vvvvv): Stack traces and setup traces are always displayed.
 
-```bash
+```sh
 forge test  -vv
 ```
 
@@ -91,10 +91,10 @@ anvil
 4. Deploy SeaDrop contract
 
 - The private key used is the first anvil account, but feel free to change it
-- Source the `.env` file to use variables like $ANVIL_RPC_URL
+- Source the `.env` file to use environment variables
 
 ```sh
-forge create --rpc-url http://127.0.0.1:8545 src/SeaDrop.sol:SeaDrop --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge create --rpc-url $ANVIL_RPC_URL src/SeaDrop.sol:SeaDrop --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
 - copy the address of the deployed SeaDrop contract and paste it as the `seadrop` address in the deploy script, `script/DeployProvNFTCollectionAnvil.s.sol`
@@ -103,7 +103,7 @@ forge create --rpc-url http://127.0.0.1:8545 src/SeaDrop.sol:SeaDrop --private-k
 5. Deploy Factory contract
 
 ```sh
-forge create --rpc-url http://127.0.0.1:8545 src/ProvNFTFactory.sol:ProvNFTFactory --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge create --rpc-url $ANVIL_RPC_URL src/ProvNFTFactory.sol:ProvNFTFactory --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
 6. Run Factory Interactions script to deploy and interact with collection contracts
@@ -111,7 +111,7 @@ forge create --rpc-url http://127.0.0.1:8545 src/ProvNFTFactory.sol:ProvNFTFacto
 - Make sure the factory address is copied into this script
 
 ```sh
-forge script script/InteractWithProvNFTFactoryAnvil.s.sol --rpc-url http://127.0.0.1:8545 --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge script script/InteractWithProvNFTFactoryAnvil.s.sol --rpc-url $ANVIL_RPC_URL --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
 ## Sepolia Deployment & Verification
@@ -128,6 +128,20 @@ forge create src/SeaDrop.sol:SeaDrop --rpc-url $SEPOLIA_RPC_URL -vvvv --private-
 
 ```sh
 forge create src/ProvNFTFactory.sol:ProvNFTFactory --rpc-url $SEPOLIA_RPC_URL -vvvv --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify --retries 10
+```
+
+### Verify Collection Contracts
+
+1. Get the constructor args
+
+```sh
+cast abi-encode "constructor(string,string,address[])" "Collection Name" "SYMBOL" \[<collectionCreatorAddress>\]
+```
+
+2. Use the hex output from previous command for `--constructor-args`
+
+```sh
+forge verify-contract <deployedCollectionAddress> src/ProvNFTCollection.sol:ProvNFTCollection --chain 11155111 --watch --etherscan-api-key $ETHERSCAN_API_KEY --constructor-args <pasteConstructorHex>
 ```
 
 ## Front End Collection Contract Integration

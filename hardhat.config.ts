@@ -31,7 +31,7 @@ const config: HardhatUserConfig = {
       {
         version: "0.8.17",
         settings: {
-          viaIR: false,
+          viaIR: true,
           optimizer: {
             enabled: true,
             runs: 1_000_000,
@@ -44,6 +44,9 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    dev: {
+      url: process.env.ANVIL_RPC_URL,
+    },
     hardhat: {
       blockGasLimit: 30_000_000,
       throwOnCallFailures: false,
