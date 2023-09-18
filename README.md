@@ -114,6 +114,12 @@ forge create --rpc-url $ANVIL_RPC_URL src/ProvNFTFactory.sol:ProvNFTFactory --pr
 forge script script/InteractWithProvNFTFactoryAnvil.s.sol --rpc-url $ANVIL_RPC_URL --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
+7. Call functions on deployed collection through user with this hardhat script
+
+```sh
+npx hardhat run js-scripts/AnvilInteractWithCollection.ts --network dev
+```
+
 ## Sepolia Deployment & Verification
 
 1. Deploy SeaDrop contract
