@@ -28,6 +28,7 @@ Configure keys in your `.env`:
 ```.env
 ETHEREUM_RPC_URL="get from alchemy; only needed for tests"
 ANVIL_RPC_URL="http://127.0.0.1:8545"
+ANVIL_PRIVATE_KEY="set to whichever anvil account"
 SEPOLIA_RPC_URL="https://eth-sepolia.g.alchemy.com/v2/{API_KEY}"
 PRIVATE_KEY="Metamask account"
 POLYGONSCAN_API_KEY=""
@@ -94,7 +95,7 @@ anvil
 - Source the `.env` file to use environment variables
 
 ```sh
-forge create --rpc-url $ANVIL_RPC_URL src/SeaDrop.sol:SeaDrop --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge create --rpc-url $ANVIL_RPC_URL src/SeaDrop.sol:SeaDrop --private-key $ANVIL_PRIVATE_KEY
 ```
 
 - copy the address of the deployed SeaDrop contract and paste it as the `seadrop` address in the deploy script, `script/DeployProvNFTCollectionAnvil.s.sol`
@@ -103,18 +104,18 @@ forge create --rpc-url $ANVIL_RPC_URL src/SeaDrop.sol:SeaDrop --private-key 0xac
 5. Deploy Factory contract
 
 ```sh
-forge create --rpc-url $ANVIL_RPC_URL src/ProvNFTFactory.sol:ProvNFTFactory --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+forge create --rpc-url $ANVIL_RPC_URL src/ProvNFTFactory.sol:ProvNFTFactory --private-key $ANVIL_PRIVATE_KEY
 ```
 
-6. Run Factory Interactions script to deploy and interact with collection contracts
+6. Deploy collection contracts
 
-- Make sure the factory address is copied into this script
+- Make sure the factory and user addresses are correct in the script
 
 ```sh
-forge script script/InteractWithProvNFTFactoryAnvil.s.sol --rpc-url $ANVIL_RPC_URL --broadcast -vvvv --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+npx hardhat run js-scripts/AnvilDeployCollection.ts --network dev
 ```
 
-7. Call functions on deployed collection through user with this hardhat script
+7. Call functions on deployed collection through user
 
 ```sh
 npx hardhat run js-scripts/AnvilInteractWithCollection.ts --network dev

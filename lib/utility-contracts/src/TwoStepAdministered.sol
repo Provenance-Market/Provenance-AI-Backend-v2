@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import {TwoStepOwnable} from "./TwoStepOwnable.sol";
 
-contract TwoStepAdministered is TwoStepOwnable {
+abstract contract TwoStepAdministered is TwoStepOwnable {
     event AdministratorUpdated(
         address indexed previousAdministrator,
         address indexed newAdministrator
@@ -38,6 +38,7 @@ contract TwoStepAdministered is TwoStepOwnable {
     constructor(address _administrator) {
         _initialize(_administrator);
     }
+
 
     function _initialize(address _administrator) private onlyConstructor {
         administrator = _administrator;

@@ -29,12 +29,18 @@ abstract contract TwoStepOwnable is ConstructorInitializable {
         _;
     }
 
-    constructor() {
-        _initialize();
+    constructor(
+        address[] memory allowedSeaDrop
+    ) {
+        _initialize(allowedSeaDrop);
     }
 
-    function _initialize() private onlyConstructor {
-        _transferOwnership(msg.sender);
+    function _initialize(address[] memory _allowedSeaDrop) private onlyConstructor {
+        if (_allowedSeaDrop.length != 0) {
+            _transferOwnership(_allowedSeaDrop[0]);
+        } else {
+            _transferOwnership(msg.sender);
+        }
     }
 
     ///@notice Initiate ownership transfer to newPotentialOwner. Note: new owner will have to manually acceptOwnership

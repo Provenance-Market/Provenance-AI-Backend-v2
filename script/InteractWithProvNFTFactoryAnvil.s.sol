@@ -36,24 +36,6 @@ contract InteractWithProvNFTFactory is Script {
         );
         ProvNFTCollection collection = ProvNFTCollection(collectionAddress);
 
-        // Configure the collection
-        // collection.setMaxSupply(maxSupply);
-
-        // Configure the drop parameters.
-        // collection.updateCreatorPayoutAddress(seadrop, creator);
-        // collection.updateAllowedFeeRecipient(seadrop, feeRecipient, true);
-        // collection.updatePublicDrop(
-        //     seadrop,
-        //     PublicDrop(
-        //         mintPrice,
-        //         uint48(block.timestamp), // start time
-        //         uint48(block.timestamp) + 1000, // end time
-        //         maxTotalMintableByWallet,
-        //         feeBps,
-        //         true
-        //     )
-        // );
-
         console.log("Collection Contract Address: ", collectionAddress);
     }
 }

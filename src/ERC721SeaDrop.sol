@@ -1,23 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {ERC721ContractMetadata, ISeaDropTokenContractMetadata} from "./ERC721ContractMetadata.sol";
+import {
+    ERC721ContractMetadata,
+    ISeaDropTokenContractMetadata
+} from "./ERC721ContractMetadata.sol";
 
-import {INonFungibleSeaDropToken} from "./interfaces/INonFungibleSeaDropToken.sol";
+import {
+    INonFungibleSeaDropToken
+} from "./interfaces/INonFungibleSeaDropToken.sol";
 
-import {ISeaDrop} from "./interfaces/ISeaDrop.sol";
+import { ISeaDrop } from "./interfaces/ISeaDrop.sol";
 
-import {AllowListData, PublicDrop, TokenGatedDropStage, SignedMintValidationParams} from "./lib/SeaDropStructs.sol";
+import {
+    AllowListData,
+    PublicDrop,
+    TokenGatedDropStage,
+    SignedMintValidationParams
+} from "./lib/SeaDropStructs.sol";
 
-import {ERC721SeaDropStructsErrorsAndEvents} from "./lib/ERC721SeaDropStructsErrorsAndEvents.sol";
+import {
+    ERC721SeaDropStructsErrorsAndEvents
+} from "./lib/ERC721SeaDropStructsErrorsAndEvents.sol";
 
-import {ERC721A} from "ERC721A/ERC721A.sol";
+import { ERC721A } from "ERC721A/ERC721A.sol";
 
-import {ReentrancyGuard} from "solmate/utils/ReentrancyGuard.sol";
+import { ReentrancyGuard } from "solmate/utils/ReentrancyGuard.sol";
 
-import {IERC165} from "openzeppelin-contracts/utils/introspection/IERC165.sol";
+import {
+    IERC165
+} from "openzeppelin-contracts/utils/introspection/IERC165.sol";
 
-import {DefaultOperatorFilterer} from "operator-filter-registry/DefaultOperatorFilterer.sol";
+import {
+    DefaultOperatorFilterer
+} from "operator-filter-registry/DefaultOperatorFilterer.sol";
 
 /**
  * @title  ERC721SeaDrop
@@ -62,7 +78,7 @@ contract ERC721SeaDrop is
         string memory name,
         string memory symbol,
         address[] memory allowedSeaDrop
-    ) ERC721ContractMetadata(name, symbol) {
+    ) ERC721ContractMetadata(name, symbol, allowedSeaDrop) {
         // Put the length on the stack for more efficient access.
         uint256 allowedSeaDropLength = allowedSeaDrop.length;
 
@@ -87,9 +103,12 @@ contract ERC721SeaDrop is
      *
      * @param allowedSeaDrop The allowed SeaDrop addresses.
      */
-    function updateAllowedSeaDrop(
-        address[] calldata allowedSeaDrop
-    ) external virtual override onlyOwner {
+    function updateAllowedSeaDrop(address[] calldata allowedSeaDrop)
+        external
+        virtual
+        override
+        onlyOwner
+    {
         _updateAllowedSeaDrop(allowedSeaDrop);
     }
 
@@ -145,9 +164,13 @@ contract ERC721SeaDrop is
      *      This is to help with ERC721 contracts in which the same token URI
      *      is desired for each token, such as when the tokenURI is 'unrevealed'.
      */
-    function tokenURI(
-        uint256 tokenId
-    ) public view virtual override returns (string memory) {
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
         if (!_exists(tokenId)) revert URIQueryForNonexistentToken();
 
         string memory baseURI = _baseURI();
@@ -187,10 +210,12 @@ contract ERC721SeaDrop is
      * @param minter   The address to mint to.
      * @param quantity The number of tokens to mint.
      */
-    function mintSeaDrop(
-        address minter,
-        uint256 quantity
-    ) external virtual override nonReentrant {
+    function mintSeaDrop(address minter, uint256 quantity)
+        external
+        virtual
+        override
+        nonReentrant
+    {
         // Ensure the SeaDrop is allowed.
         _onlyAllowedSeaDrop(msg.sender);
 
@@ -286,10 +311,11 @@ contract ERC721SeaDrop is
      * @param seaDropImpl The allowed SeaDrop contract.
      * @param dropURI     The new drop URI.
      */
-    function updateDropURI(
-        address seaDropImpl,
-        string calldata dropURI
-    ) external virtual override {
+    function updateDropURI(address seaDropImpl, string calldata dropURI)
+        external
+        virtual
+        override
+    {
         // Ensure the sender is only the owner or contract itself.
         _onlyOwnerOrSelf();
 
@@ -408,9 +434,7 @@ contract ERC721SeaDrop is
      *
      * @param minter The minter address.
      */
-    function getMintStats(
-        address minter
-    )
+    function getMintStats(address minter)
         external
         view
         override
@@ -430,9 +454,7 @@ contract ERC721SeaDrop is
      *
      * @param interfaceId The interface id to check against.
      */
-    function supportsInterface(
-        bytes4 interfaceId
-    )
+    function supportsInterface(bytes4 interfaceId)
         public
         view
         virtual
@@ -461,10 +483,11 @@ contract ERC721SeaDrop is
      *
      * Emits an {ApprovalForAll} event.
      */
-    function setApprovalForAll(
-        address operator,
-        bool approved
-    ) public override onlyAllowedOperatorApproval(operator) {
+    function setApprovalForAll(address operator, bool approved)
+        public
+        override
+        onlyAllowedOperatorApproval(operator)
+    {
         super.setApprovalForAll(operator, approved);
     }
 
@@ -483,10 +506,11 @@ contract ERC721SeaDrop is
      *
      * Emits an {Approval} event.
      */
-    function approve(
-        address operator,
-        uint256 tokenId
-    ) public override onlyAllowedOperatorApproval(operator) {
+    function approve(address operator, uint256 tokenId)
+        public
+        override
+        onlyAllowedOperatorApproval(operator)
+    {
         super.approve(operator, tokenId);
     }
 

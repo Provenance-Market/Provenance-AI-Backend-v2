@@ -23,14 +23,14 @@ async function createNFTCollection() {
       "Anvil Prov SeaDrop Collection",
       "APSC"
     );
-    console.log("Transaction:", tx);
+    // console.log("Transaction:", tx);
 
     const receipt = await tx.wait();
-    console.log({ receipt });
+    // console.log({ receipt });
 
     // Access the events emitted during the transaction
     const logs = receipt.logs;
-    console.log("Logs:", logs);
+    // console.log("Logs:", logs);
 
     // Extract the address from the third log's data field
     const data = logs[2].data;
