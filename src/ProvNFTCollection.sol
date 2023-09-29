@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import { SafeTransferLib } from "solmate/utils/SafeTransferLib.sol";
-import { ERC721SeaDrop } from "./ERC721SeaDrop.sol";
+import {SafeTransferLib} from "solmate/utils/SafeTransferLib.sol";
+import {ERC721SeaDrop} from "./ERC721SeaDrop.sol";
 
 /// @custom:security-contact contact@prov.ai
 contract ProvNFTCollection is ERC721SeaDrop {
