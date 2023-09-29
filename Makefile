@@ -40,3 +40,27 @@ snapshot:
 # Run lint checks
 format:
 	@yarn lint:check
+
+
+# Run development blockchain
+anvil:
+	@anvil
+
+# Deployment and interaction scripts for Provenance
+deployProv:
+	@forge script script/DeployProvNFTCollection.s.sol:DeployProvNFTCollection $(NETWORK_ARGS)
+
+deployAnvil:
+	@forge script script/DeployProvNFTCollectionAnvil.s.sol:DeployProvNFTCollectionAnvil $(NETWORK_ARGS)
+
+interactProv:
+	@forge script script/InteractWithProvNFTCollection.s.sol:InteractWithProvNFTCollection --collection-address $(COLLECTION_ADDRESS) $(NETWORK_ARGS)
+
+interactAnvil:
+	@forge script script/InteractWithProvNFTFactoryAnvil.s.sol:InteractWithProvNFTFactoryAnvil --collection-address $(COLLECTION_ADDRESS) $(NETWORK_ARGS)
+
+NETWORK_ARGS := --rpc-url http://localhost:8545 --private-key $(DEFAULT_ANVIL_KEY) --broadcast
+
+ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
+	NETWORK_ARGS := --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvvv
+endif
